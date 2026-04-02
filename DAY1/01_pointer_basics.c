@@ -75,3 +75,29 @@ int main() {
  *  On a 32-bit embedded system, they'd all be 4 bytes.)
  * ============================================================
  */
+
+
+
+
+
+/*
+ * ============================================================
+ * YOUR TASK 2a:
+ * Write a function called swap_three(int *a, int *b, int *c)
+ * that rotates three values: a gets b's value, b gets c's, c gets a's.
+ * Test it.
+ * ============================================================
+ *
+ * YOUR TASK 2b:
+ * Write a function: void get_min_max(int *arr, int size, int *min, int *max)
+ * It should find the min and max of the array and store them
+ * through the pointers. This is how embedded C returns multiple
+ * values from a function — through output pointers.
+ * Test with: int arr[] = {34, 7, 23, 1, 89, 12};
+ * ============================================================
+ *
+ * INTERVIEW TIP: Be ready to explain WHY you need &x when
+ * calling swap. "Because we need to pass the address so the
+ * function can modify the original variable, not a copy."
+ * ============================================================
+ */

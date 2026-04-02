@@ -28,17 +28,72 @@ void swap(int *a, int *b) {
     *b = temp;
 }
 
+void swap3(int *a, int *b, int *c){
+    int temp = *a;
+    *a = *b;
+    *b = *c;
+    *c = temp;
+}
+
+void getMax(int *arr, int size, int *max){
+    *max = arr[0];
+    if (size > 0){
+        *max = arr[0];
+    }
+
+    for (int i = 0; i < size;i++){
+        if (arr[i] > *max)
+            {
+                *max = arr[i];
+            }
+    }
+}
+
+void getMin(int *arr, int size, int *min){
+    *min = arr[0];
+    if (size > 0)
+    {
+        *min = arr[0];
+    }
+
+    for (int i = 0; i < size;i++){
+        if (arr[i] < *min)
+            {
+                *min = arr[i];
+            }
+    }
+}
 int main() {
     int x = 10, y = 20;
+    int a = 23, b = 244, c = 12;
 
-    printf("Before broken swap: x=%d, y=%d\n", x, y);
+    int arr[] = {34, 7,8,3434};
+    int min, max;
+    int sizeArr = sizeof(arr) / sizeof(arr[0]);
+
+
+    printf("\nBefore broken swap: x=%d, y=%d\n", x, y);
     swap_broken(x, y);
-    printf("After broken swap:  x=%d, y=%d\n\n", x, y);
+    printf("After broken swap:  x=%d, y=%d\n", x, y);
 
     printf("Before real swap:   x=%d, y=%d\n", x, y);
     swap(&x, &y);  // passing ADDRESSES, not values
     printf("After real swap:    x=%d, y=%d\n", x, y);
 
+    printf("\nBefore the swap: a = %d, b=%d, c=%d\n", a, b, c);
+    swap3(&a, &b, &c);
+    printf("These are our swapped values: a = %d, b=%d, c=%d\n", a, b, c);
+    printf("\n");
+
+    // get_min_max(arr, sizeArr, &min, &max);
+    // printf("Here is our min and max numbers from the given array.\n");
+    // printf("MinNum = %d\n", min);
+    // printf("MaxNum = %d\n", max);
+
+    getMin(arr, sizeArr, &min);
+    getMax(arr, sizeArr, &max);
+
+    printf("Max: %d\nMin: %d\n", min, max);
     return 0;
 }
 
