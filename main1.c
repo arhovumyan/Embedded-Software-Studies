@@ -7,7 +7,7 @@ typedef struct { // this is how you define a custom type
     int c;   // 4
     long long int d;  // 8
 } MYSTRUCT; // we define a custom type with this name with 4 memebers. 
-            // The size of MYSTRUCT will be not 24, but 32 due to padding
+            // The size of MYSTRUCT will be not 24, but 32. it adds 4 to both a and c to match b and d
 
 #define COUNT 4 // anywhere you see COUNT, it will be represented as the number 4.
 
@@ -32,5 +32,52 @@ void address1() {
 }
 
 void address2() {
+    int *p;
+    // %p = hexidecimal , %d = decimal
+    p = a;
+    printf("Address of a is %p; value of p is %p [%d]\nvalue pointer to by p is %d\n", a, p, p, *p);
 
+    p =  p + 1;
+    printf("Address of a is %p; value of p is %p [%d]\nvalue pointer to by p is %d\n", a, p, p, *p);
+
+    p++;
+    printf("Address of a is %p; value of p is %p [%d]\nvalue pointer to by p is %d\n", a, p, p, *p);
+
+    p = p + 2;
+    printf("Address of a is %p; value of p is %p [%d]\nvalue pointer to by p is %d\n", a, p, p, *p);
+}
+
+void address3() {
+    MYSTRUCT *p, *q, *arrayadd;
+    void *v;
+
+    printf("size of MYSTRUCT = %d\n", sizeof(MYSTRUCT));
+    p = (MYSTRUCT*)calloc(COUNT, sizeof(MYSTRUCT)); // allocated contigous block of memory for 4 structs,
+    // p is basically creating an array of 4 MYSTRUCT on the heap. 
+    for (int i = 0; i < COUNT; i++) {
+        p[i].a = i;
+        p[i].b = 10000000000.0 + i;
+        p[i].c = i * 20;
+        p[i].d = 4294967296 + i;
+    }
+
+    q = p;
+    arrayadd = p;
+    printf("[0] values:\na is %d\nb is %f\nc is %d\nd is %lld\naddress=%p : %d\n\n", q->a, q->b, q->c, q->d, q, q);
+    q = p + 1;
+    printf("[1] values:\na is %d\nb is %f\nc is %d\nd is %lld\naddress=%p : %d\n\n", q->a, q->b, q->c, q->d, q, q);
+    q = q + 2; // use address arithmetic to get the address of the fourth element (the array is zero based remember)
+    printf("[3] values:\na is %d\nb is %f\nc is %d\nd is %lld\naddress=%p : %d\n\n", q->a, q->b, q->c, q->d, q, q);
+
+    printf("---addresses of structs (ptr arithmetic)---\n");
+    for (int i = 0; i < COUNT; i++) {
+        printf("#[%d] %p (%d)\n", i, p, p); // each struct is at a 32-byte offset
+        p++;
+    }
+
+    printf("---addresses of structs (array syntax)---\n");
+    for (int i = 0; i < COUNT; i++) {
+        printf("#[%d] %p (%d)\n", i, &arrayadd[i], &arrayadd[i]); // each struct is at a 32-byte offset
+    }
+    printf("Struct 3...\na is %d\nb is %f\nc is %d\nd is %lld\n", arrayadd[3].a, arrayadd[3].b, arrayadd[3].c, arrayadd[3].d);
 }
