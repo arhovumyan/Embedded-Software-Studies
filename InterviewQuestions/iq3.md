@@ -13,15 +13,50 @@
     These INTERRUPTS are pre defined function that are called whenever an interrupt signal reaches the processor. They are built between the processor and the OS. These are called INTERRUPT SERVICE ROUTINES (ISR). Every single interrupt has its own dedicated ISR, for example Page Faults has its own unique ISR and so on.
 
 what is an atomic increment
+    special instructions that the gpu imprelements specific for x problem.
 
 what is mutexes
+    is a lock that prevents two threads from accessing the same data at the same time. without this, multiple threads can edit a data and cause corruption. This is called RACE CONDITION
 
+    void *increment(void *arg) {
+    for (int i = 0; i < 1000000; i++) {
+        pthread_mutex_lock(&lock);    // LOCK — "I'm going in, everyone wait"
+
+        shared_counter++;              // only ONE thread touches this at a time
+
+        pthread_mutex_unlock(&lock);  // UNLOCK — "I'm done, next person go"
+    }
+    return NULL;
+    }
+    
 what is the difference between threads and processes
+    A process is an independed running program. it has its own memory space, stack, heap code and so on. processes are isolated from each other. if one crashes the others are still running. Your web browser and your minecraft window are separate processes. They can't reach each other's memory. 
+    
+    A thread is a path of execution within a process. Multiple threads share the same memory space, heap, gloabal variable and code. They each get their own STACK(so that each thread can create their own local variables and function call chain), but everything else is shared. This is where you use MUTEXES, so that some threads don't step on other thread's data.
+    
+    a process is like the whole apartment and a thread is the person living in it.
 
 what is multithreadding
+    Multiple threadds working at the same time. Makes one thread wait while another one is working. Its an efficient resource sharing. 
+        pros
 
-what is parallelism
+what is multiprocessing 
+    running multiple threads SIMULTANEOUSLY and not just stopping one to run the other one. Each thread has its own memory. They dont interfier with other. THey are assigned to different/separate CPU cores to maximize CPU functionality. 
+        pros
+            true parallelism
+            fault isolation ( if one crashes it dont affect the others)
+            bypass the Global Interpreter Lock because each process has its own python interpreter and memory sapce allowing for parallel execution. 
+        cons
+            higher memory overhead cus each process consumes its own memory and resources 
+            interprocess communication is more complex
+            slower context switching
 
-what is concurrency
+what is parallelism and what is concurrency.
+    concurrency is finishing up tasks at the same time by starting and stopping other processes. A single core CPU can be used for this task. 
+    
+    Parallelism is when multiple cores are working simultaneously and executing their tasks without the need to stop others. 
 
-what are peripherals
+    --- Concurrency and parallelism are concepts — about how tasks are structured and executed.
+        
+    --- Multithreading and multiprocessing are implementation mechanisms — actual tools you use in code.
+
